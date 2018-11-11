@@ -3,11 +3,13 @@ package com.example.konatsu_p.rhythmsync;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -15,6 +17,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private long mCount, mDelay, mPeriod, mCurrentTime;
+    private ArrayList<Long> mTapTimeList;
     private Timer mTimer;
     private Handler mHandler;
 
@@ -42,11 +45,13 @@ public class MainActivity extends AppCompatActivity {
         mDelay = 0;
         mPeriod = 10;
         mCurrentTime = 0;
+        mTapTimeList = new ArrayList<>();
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCount = 0;
+                mTapTimeList = new ArrayList<>();
                 mTimer = new Timer(false);
                 mTimer.scheduleAtFixedRate(new TimerTask() {
                     @Override
@@ -82,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
         tapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTapTimeList.add(mCurrentTime);
                 tapTextView.setText(dataFormat.format(mCurrentTime));
+                Log.d("TIME：", mTapTimeList.get(mTapTimeList.size() - 1) + "");
             }
         });
     }
