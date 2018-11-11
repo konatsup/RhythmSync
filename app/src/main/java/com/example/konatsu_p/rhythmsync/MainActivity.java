@@ -17,12 +17,12 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private long mCount, mDelay, mPeriod, mCurrentTime;
-    private ArrayList<Long> mTapTimeList;
+    private ArrayList<Long> mTapTimeList1, mTapTimeList2;
     private Timer mTimer;
     private Handler mHandler;
 
-    private TextView timerTextView, tapTextView;
-    private Button startButton, stopButton, tapButton;
+    private TextView timerTextView, tapTextView1, tapTextView2;
+    private Button startButton, stopButton, tapButton1, tapButton2;
 
     private SimpleDateFormat dataFormat =
             new SimpleDateFormat("mm:ss.SS", Locale.US);
@@ -33,11 +33,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         timerTextView = (TextView) findViewById(R.id.timer_text_view);
-        tapTextView = (TextView) findViewById(R.id.tap_text_view);
+        tapTextView1 = (TextView) findViewById(R.id.tap_text_view1);
+        tapTextView2 = (TextView) findViewById(R.id.tap_text_view2);
+
 
         startButton = (Button) findViewById(R.id.start_button);
         stopButton = (Button) findViewById(R.id.stop_button);
-        tapButton = (Button) findViewById(R.id.tap_button);
+        tapButton1 = (Button) findViewById(R.id.tap_button1);
+        tapButton2 = (Button) findViewById(R.id.tap_button2);
+
 
         mHandler = new Handler();
 
@@ -45,13 +49,15 @@ public class MainActivity extends AppCompatActivity {
         mDelay = 0;
         mPeriod = 10;
         mCurrentTime = 0;
-        mTapTimeList = new ArrayList<>();
+        mTapTimeList1 = new ArrayList<>();
+        mTapTimeList2 = new ArrayList<>();
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCount = 0;
-                mTapTimeList = new ArrayList<>();
+                mTapTimeList1 = new ArrayList<>();
+                mTapTimeList2 = new ArrayList<>();
                 mTimer = new Timer(false);
                 mTimer.scheduleAtFixedRate(new TimerTask() {
                     @Override
@@ -78,18 +84,28 @@ public class MainActivity extends AppCompatActivity {
                     mTimer.cancel();
                     mTimer = null;
                     timerTextView.setText(dataFormat.format(0));
-                    tapTextView.setText(dataFormat.format(0));
+                    tapTextView1.setText(dataFormat.format(0));
+                    tapTextView2.setText(dataFormat.format(0));
                 }
 
             }
         });
 
-        tapButton.setOnClickListener(new View.OnClickListener() {
+        tapButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTapTimeList.add(mCurrentTime);
-                tapTextView.setText(dataFormat.format(mCurrentTime));
-                Log.d("TIME：", mTapTimeList.get(mTapTimeList.size() - 1) + "");
+                mTapTimeList1.add(mCurrentTime);
+                tapTextView1.setText(dataFormat.format(mCurrentTime));
+                Log.d("TIME1：", mTapTimeList1.get(mTapTimeList1.size() - 1) + "");
+            }
+        });
+
+        tapButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTapTimeList2.add(mCurrentTime);
+                tapTextView2.setText(dataFormat.format(mCurrentTime));
+                Log.d("TIME2：", mTapTimeList2.get(mTapTimeList2.size() - 1) + "");
             }
         });
     }
