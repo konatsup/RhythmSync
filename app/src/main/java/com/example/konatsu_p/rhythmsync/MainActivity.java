@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private Button startButton, stopButton, tapButton;
 
     private SimpleDateFormat dataFormat =
-            new SimpleDateFormat("mm:ss.S", Locale.US);
+            new SimpleDateFormat("mm:ss.SS", Locale.US);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         mCount = 0;
         mDelay = 0;
-        mPeriod = 100;
+        mPeriod = 10;
         mCurrentTime = 0;
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     mTimer.cancel();
                     mTimer = null;
                     timerTextView.setText(dataFormat.format(0));
+                    tapTextView.setText(dataFormat.format(0));
                 }
 
             }
