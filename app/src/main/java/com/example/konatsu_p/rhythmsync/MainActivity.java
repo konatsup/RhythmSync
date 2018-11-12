@@ -55,32 +55,33 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCount = 0;
-                mTapTimeList1 = new ArrayList<>();
-                mTapTimeList2 = new ArrayList<>();
-                mTimer = new Timer(false);
-                mTimer.scheduleAtFixedRate(new TimerTask() {
-                    @Override
-                    public void run() {
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCount++;
-                                mCurrentTime = mCount * mPeriod;
-                                timerTextView.setText(dataFormat.format(mCurrentTime));
-                            }
-                        });
+                if (mTimer == null) {
+                    mCount = 0;
+                    mTapTimeList1 = new ArrayList<>();
+                    mTapTimeList2 = new ArrayList<>();
+                    mTimer = new Timer(false);
+                    mTimer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mCount++;
+                                    mCurrentTime = mCount * mPeriod;
+                                    timerTextView.setText(dataFormat.format(mCurrentTime));
+                                }
+                            });
 
-                    }
-                }, mDelay, mPeriod);
-
+                        }
+                    }, mDelay, mPeriod);
+                }
             }
         });
 
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mTimer) {
+                if (mTimer != null) {
                     mTimer.cancel();
                     mTimer = null;
                     timerTextView.setText(dataFormat.format(0));
